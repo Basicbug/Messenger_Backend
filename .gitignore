@@ -6,8 +6,8 @@ build/
 !**/src/test/**
 
 ### application properties ###
-application-dev.properties
-application-prod.properties
+application-dev.yml
+application-prod.yml
 
 ### STS ###
 .apt_generated
