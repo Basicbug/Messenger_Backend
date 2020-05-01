@@ -1,6 +1,7 @@
 package com.basicbug.messenger.service;
 
 import com.basicbug.messenger.model.social.NaverAuth;
+import com.basicbug.messenger.model.social.NaverProfile;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -64,6 +65,22 @@ public class NaverService {
         }
 
         logger.error("getNaverTokenInfo request Fail");
+        return null;
+    }
+
+    public NaverProfile getNaverProfile(String accessToken) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.set("Authorization", "Bearer " + accessToken);
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(null, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity(env.getProperty("spring.social.naver.url.profile"), request, String.class);
+        if (response.getStatusCode() == HttpStatus.OK) {
+            logger.error("Response success");
+            return gson.fromJson(response.getBody(), NaverProfile.class);
+        }
+
         return null;
     }
 }
