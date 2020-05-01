@@ -50,6 +50,20 @@ public class ResponseService {
         return response;
     }
 
+    public CommonResponse getSuccessResponse() {
+        CommonResponse response = new CommonResponse();
+        setSuccessfulResult(response);
+        return response;
+    }
+
+    public CommonResponse getFailResponse(int code, String message) {
+        CommonResponse response = new CommonResponse();
+        response.setSuccess(false);
+        response.setCode(code);
+        response.setMessage(message);
+        return response;
+    }
+
     private void setFailResult(CommonResponse response) {
         response.setSuccess(false);
         response.setCode(CommonResult.FAIL.getCode());
