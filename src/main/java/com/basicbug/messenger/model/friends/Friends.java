@@ -30,10 +30,10 @@ public class Friends {
     private long id;
 
     @Column(nullable = false, length = 30)
-    private String fromuid;
+    private String uid;
 
     @Column(nullable = false, length = 30)
-    private String touid;
+    private String frienduid;
 
     @CreatedDate
     private LocalDateTime meetAt;
