@@ -22,7 +22,6 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradle/caches
-          key:
-            - v1-gradle-cache-{{ checksum "build.gradle" }}
+          key: v1-gradle-cache-{{ checksum "build.gradle" }}
 
       # test result needs to be added
