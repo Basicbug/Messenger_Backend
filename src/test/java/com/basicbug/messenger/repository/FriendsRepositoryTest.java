@@ -23,6 +23,8 @@ public class FriendsRepositoryTest {
     @Autowired
     private FriendsRepository friendsRepository;
 
+    private static final String TEST_UID = "qwebnm7788";
+
     @Test
     public void findAllByUid_ShouldReturnFriendsList() {
         /*
@@ -34,26 +36,58 @@ public class FriendsRepositoryTest {
         or remove dependency to data.sql
          */
 
-        String uid = "qwebnm7788";
-
         //given
         friendsRepository.save(Friends.builder()
-            .uid(uid)
+            .uid(TEST_UID)
             .frienduid("A")
             .build());
 
         friendsRepository.save(Friends.builder()
-            .uid(uid)
+            .uid(TEST_UID)
             .frienduid("B")
             .build());
 
         //when
-        Optional<List<Friends>> friends = friendsRepository.findAllByUid(uid);
+        Optional<List<Friends>> friends = friendsRepository.findAllByUid(TEST_UID);
 
         //then
         assertThat(friends).isNotNull();
         assertThat(friends.isPresent()).isTrue();
         assertThat(friends.get().size()).isEqualTo(3);
         assertThat(friends.get().get(0).getFrienduid()).isIn("A", "B", "bsgreentea");
+    }
+
+    @Test
+    public void findUidAndFriendUid_ShouldReturnNonNull_WhenExists() {
+
+        //given
+        friendsRepository.save(Friends.builder()
+            .uid(TEST_UID)
+            .frienduid("A")
+            .build());
+
+        //when
+        Optional<Friends> friends = friendsRepository.findByUidAndFrienduid(TEST_UID, "A");
+
+        //then
+        assertThat(friends).isNotNull();
+        assertThat(friends.isPresent()).isTrue();
+    }
+
+    @Test
+    public void findUidAndFriendUid_ShouldReturnNull_WhenNotExists() {
+
+        //given
+        friendsRepository.save(Friends.builder()
+            .uid(TEST_UID)
+            .frienduid("A")
+            .build());
+
+        //when
+        Optional<Friends> friends = friendsRepository.findByUidAndFrienduid(TEST_UID, "B");
+
+        //then
+        assertThat(friends).isNotNull();
+        assertThat(friends.isPresent()).isFalse();
     }
 }

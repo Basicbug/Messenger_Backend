@@ -11,4 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface FriendsRepository extends JpaRepository<Friends, Long> {
 
     Optional<List<Friends>> findAllByUid(String uid);
+
+    Optional<Friends> findByUidAndFrienduid(String uid, String frienduid);
 }
