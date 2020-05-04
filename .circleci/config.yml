@@ -1,0 +1,27 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    environment:
+      - JVM_OPTS: -Xmx3200m
+    steps: # run the steps with docker
+      - checkout
+      - restore_cache: # pull down cache for Gradle wrapper and dependencies
+          key: v1-gradle-wraper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - restore_cache:
+          key: v1-gradle-cache-{{ checksum "build.gradle" }}
+
+      - run: gradle dependencies
+      # test needs to be added
+
+      - save_cache:
+          paths:
+            - ~/.gradle/wrapper
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper.properties" }}
+      - save_cache:
+          paths:
+            - ~/.gradle/caches
+          key: v1-gradle-cache-{{ checksum "build.gradle" }}
+
+      # test result needs to be added
