@@ -40,7 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/social")
+@RequestMapping("/v1/social")
 public class SocialController {
 
     private Logger logger = LoggerFactory.getLogger(SocialController.class);

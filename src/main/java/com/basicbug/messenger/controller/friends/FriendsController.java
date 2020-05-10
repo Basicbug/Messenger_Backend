@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/friends")
 public class FriendsController {
 
     private Logger logger = LoggerFactory.getLogger(FriendsController.class);
@@ -38,7 +38,7 @@ public class FriendsController {
     private final ResponseService responseService;
 
     @ApiOperation(value = "친구 목록", notes = "사용자의 친구 리스트를 반환")
-    @GetMapping("/friends/{uid}")
+    @GetMapping("/{uid}")
     public ListResponse<Friends> fidnAllFriends(
         @ApiParam(value = "사용자 uid", required = true) @PathVariable String uid) {
 
@@ -46,7 +46,7 @@ public class FriendsController {
     }
 
     @ApiOperation(value = "친구 추가", notes = "사용자의 친구 목록에 친구를 추가한다.")
-    @PostMapping("/friends/add")
+    @PostMapping("/add")
     public CommonResponse addFriends(
         @ApiParam(value = "사용자 uid", required = true) @RequestParam String uid,
         @ApiParam(value = "친구 uid", required = true) @RequestParam String friendUid) {
@@ -60,7 +60,7 @@ public class FriendsController {
     }
 
     @ApiOperation(value = "친구 관계 여부 확인", notes = "두 사용자가 서로 친구 관계인지 여부를 확인한다.")
-    @PostMapping(value = "/friends/check")
+    @PostMapping(value = "/check")
     public SingleResponse<Boolean> isFriends(
         @ApiParam(value = "사용자 uid", required = true) @RequestParam String uid,
         @ApiParam(value = "친구 uid", required = true) @RequestParam String friendUid) {
