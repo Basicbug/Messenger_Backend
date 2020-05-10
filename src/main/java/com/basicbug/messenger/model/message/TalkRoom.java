@@ -1,25 +1,26 @@
 package com.basicbug.messenger.model.message;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author JaewonChoi
  */
 
 @Getter
+@Setter
 public class TalkRoom {
 
     private String roomId;
-    private Set<String> participants = new HashSet<>();
+    private String name;
 
-    @Builder
-    public TalkRoom(String roomId, List<String> participants) {
-        this.roomId = roomId;
-        this.participants = new HashSet<>(participants);
+    public static TalkRoom create(String name) {
+        TalkRoom talkRoom = new TalkRoom();
+        talkRoom.roomId = UUID.randomUUID().toString();
+        talkRoom.name = name;
+
+        return talkRoom;
     }
-
 }

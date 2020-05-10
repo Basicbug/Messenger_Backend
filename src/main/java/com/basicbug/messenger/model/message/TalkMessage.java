@@ -2,6 +2,7 @@ package com.basicbug.messenger.model.message;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author JaewonChoi

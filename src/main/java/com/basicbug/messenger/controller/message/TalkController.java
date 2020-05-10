@@ -2,12 +2,11 @@ package com.basicbug.messenger.controller.message;
 
 import com.basicbug.messenger.model.message.TalkRoom;
 import com.basicbug.messenger.model.response.SingleResponse;
+import com.basicbug.messenger.repository.TalkRoomRepository;
 import com.basicbug.messenger.service.ResponseService;
-import com.basicbug.messenger.service.TalkService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -31,15 +30,13 @@ public class TalkController {
     private Logger logger = LoggerFactory.getLogger(TalkController.class);
 
     private final ResponseService responseService;
-    private final TalkService talkService;
+    private final TalkRoomRepository talkRoomRepository;
 
     @ApiOperation(value = "채팅방 생성", notes = "명시된 사용자들이 추가된 채팅방 생성")
     @PostMapping("/create/room")
-    public SingleResponse<String> createTalkRoom(
-        @ApiParam(value = "참여자 uid 리스트", required = true) @RequestParam List<String> participants) {
-
-        logger.error("/create/room" + participants);
-        TalkRoom talkRoom = talkService.createChatRoom(participants);
-        return responseService.getSingleResponse(talkRoom.getRoomId());
+    public SingleResponse<TalkRoom> createTalkRoom(
+        @ApiParam(value = "채팅방 이름", required = false, defaultValue = "기본 채팅방 이름") @RequestParam String name) {
+        TalkRoom talkRoom = talkRoomRepository.createTalkRoom(name);
+        return responseService.getSingleResponse(talkRoom);
     }
 }
