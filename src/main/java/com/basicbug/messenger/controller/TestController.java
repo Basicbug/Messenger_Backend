@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = {"0. Test"})
 @Slf4j
 @RestController
-@RequestMapping(value = "/test")
+@RequestMapping(value = "/v1/test")
 public class TestController {
 
     @ApiOperation(value = "문자열 값 조회", notes = "String 값 반환 테스트")

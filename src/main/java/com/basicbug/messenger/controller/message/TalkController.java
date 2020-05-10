@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/talk")
+@RequestMapping("/v1/talk")
 public class TalkController {
 
     private Logger logger = LoggerFactory.getLogger(TalkController.class);
