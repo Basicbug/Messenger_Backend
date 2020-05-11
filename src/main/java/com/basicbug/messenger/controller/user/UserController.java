@@ -1,4 +1,4 @@
-package com.basicbug.messenger.controller;
+package com.basicbug.messenger.controller.user;
 
 import com.basicbug.messenger.model.response.ListResponse;
 import com.basicbug.messenger.model.response.SingleResponse;
@@ -46,10 +46,12 @@ public class UserController {
     @PostMapping(value = "/user")
     public SingleResponse<User> save(
         @ApiParam(value = "회원 아이디", required = true) @RequestParam String uid,
-        @ApiParam(value = "회원 이름", required = true) @RequestParam String name) {
+        @ApiParam(value = "회원 이름", required = true) @RequestParam String name,
+        @ApiParam(value = "회원 상태 메세지", required = false) @RequestParam String status) {
         User user = User.builder()
             .uid(uid)
             .name(name)
+            .status(status)
             .build();
 
         return responseService.getSingleResponse(userRepository.save(user));
