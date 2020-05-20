@@ -1,7 +1,7 @@
 package com.basicbug.messenger.controller.message;
 
 import com.basicbug.messenger.model.message.TalkMessage;
-import com.basicbug.messenger.repository.TalkRoomRepository;
+import com.basicbug.messenger.repository.talk.TalkRoomRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;

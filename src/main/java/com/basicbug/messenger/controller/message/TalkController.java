@@ -2,7 +2,7 @@ package com.basicbug.messenger.controller.message;
 
 import com.basicbug.messenger.model.message.TalkRoom;
 import com.basicbug.messenger.model.response.SingleResponse;
-import com.basicbug.messenger.repository.TalkRoomRepository;
+import com.basicbug.messenger.repository.talk.TalkRoomRepository;
 import com.basicbug.messenger.service.ResponseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

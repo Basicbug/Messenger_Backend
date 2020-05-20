@@ -1,7 +1,7 @@
-package com.basicbug.messenger.service;
+package com.basicbug.messenger.service.friend;
 
 import com.basicbug.messenger.model.friends.Friends;
-import com.basicbug.messenger.repository.FriendsRepository;
+import com.basicbug.messenger.repository.friend.FriendsRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.basicbug.messenger.repository;
+package com.basicbug.messenger.repository.user;
 
 import com.basicbug.messenger.model.user.User;
 import java.util.Optional;

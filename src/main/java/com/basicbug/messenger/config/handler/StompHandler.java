@@ -1,7 +1,7 @@
 package com.basicbug.messenger.config.handler;
 
-import com.basicbug.messenger.repository.TalkRoomRepository;
-import com.basicbug.messenger.service.TalkService;
+import com.basicbug.messenger.repository.talk.TalkRoomRepository;
+import com.basicbug.messenger.service.talk.TalkService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
@@ -37,6 +37,8 @@ public class StompHandler implements ChannelInterceptor {
         } else if (StompCommand.UNSUBSCRIBE == accessor.getCommand()) {
 
         }
+
+        log.error("StompHandler preSend");
         return message;
     }
 }

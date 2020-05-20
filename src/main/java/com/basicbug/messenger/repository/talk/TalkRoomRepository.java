@@ -1,4 +1,4 @@
-package com.basicbug.messenger.repository;
+package com.basicbug.messenger.repository.talk;
 
 import com.basicbug.messenger.model.message.TalkRoom;
 import javax.annotation.PostConstruct;

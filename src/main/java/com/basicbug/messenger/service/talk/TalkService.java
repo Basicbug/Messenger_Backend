@@ -1,7 +1,7 @@
-package com.basicbug.messenger.service;
+package com.basicbug.messenger.service.talk;
 
 import com.basicbug.messenger.model.message.TalkMessage;
-import com.basicbug.messenger.repository.TalkRoomRepository;
+import com.basicbug.messenger.repository.talk.TalkRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
