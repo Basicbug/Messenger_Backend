@@ -1,4 +1,4 @@
-package com.basicbug.messenger.service;
+package com.basicbug.messenger.service.social;
 
 import com.basicbug.messenger.model.social.NaverAuth;
 import com.basicbug.messenger.model.social.NaverProfile;

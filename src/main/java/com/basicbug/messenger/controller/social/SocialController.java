@@ -1,4 +1,4 @@
-package com.basicbug.messenger.controller;
+package com.basicbug.messenger.controller.social;
 
 import com.basicbug.messenger.config.security.JwtTokenProvider;
 import com.basicbug.messenger.exception.UserExistException;
@@ -8,8 +8,8 @@ import com.basicbug.messenger.model.response.SingleResponse;
 import com.basicbug.messenger.model.social.NaverAuth;
 import com.basicbug.messenger.model.social.NaverProfile;
 import com.basicbug.messenger.model.user.User;
-import com.basicbug.messenger.repository.UserRepository;
-import com.basicbug.messenger.service.NaverService;
+import com.basicbug.messenger.repository.user.UserRepository;
+import com.basicbug.messenger.service.social.NaverService;
 import com.basicbug.messenger.service.ResponseService;
 import com.google.gson.Gson;
 import io.swagger.annotations.Api;

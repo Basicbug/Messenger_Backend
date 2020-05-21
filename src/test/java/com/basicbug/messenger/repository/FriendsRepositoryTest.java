@@ -1,9 +1,9 @@
 package com.basicbug.messenger.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import com.basicbug.messenger.model.friends.Friends;
+import com.basicbug.messenger.repository.friend.FriendsRepository;
 import java.util.List;
 import java.util.Optional;
 import org.junit.Test;

@@ -2,11 +2,12 @@ package com.basicbug.messenger.controller.message;
 
 import com.basicbug.messenger.model.message.TalkRoom;
 import com.basicbug.messenger.model.response.SingleResponse;
-import com.basicbug.messenger.repository.TalkRoomRepository;
+import com.basicbug.messenger.repository.talk.TalkRoomRepository;
 import com.basicbug.messenger.service.ResponseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -38,5 +39,11 @@ public class TalkController {
         @ApiParam(value = "채팅방 이름", required = false, defaultValue = "기본 채팅방 이름") @RequestParam String name) {
         TalkRoom talkRoom = talkRoomRepository.createTalkRoom(name);
         return responseService.getSingleResponse(talkRoom);
+    }
+
+    @ApiOperation(value = "참여하고 있는 채팅방 목록", notes = "현재 참여하고 있는 채팅방의 목록 리스트 반환")
+    @PostMapping("/room/list")
+    public SingleResponse<List<TalkRoom>> getTalkRoomList() {
+        return null;
     }
 }

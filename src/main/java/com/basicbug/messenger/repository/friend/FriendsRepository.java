@@ -1,4 +1,4 @@
-package com.basicbug.messenger.repository;
+package com.basicbug.messenger.repository.friend;
 
 import com.basicbug.messenger.model.friends.Friends;
 import java.util.List;

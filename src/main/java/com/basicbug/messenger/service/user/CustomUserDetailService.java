@@ -1,7 +1,7 @@
-package com.basicbug.messenger.service;
+package com.basicbug.messenger.service.user;
 
 import com.basicbug.messenger.exception.EmailSigninFailedException;
-import com.basicbug.messenger.repository.UserRepository;
+import com.basicbug.messenger.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

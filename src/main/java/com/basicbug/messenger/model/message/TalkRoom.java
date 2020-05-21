@@ -1,5 +1,6 @@
 package com.basicbug.messenger.model.message;
 
+import java.io.Serializable;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TalkRoom {
+public class TalkRoom implements Serializable {
 
     private String roomId;
     private String name;
