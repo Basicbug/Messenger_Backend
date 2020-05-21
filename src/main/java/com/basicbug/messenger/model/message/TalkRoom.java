@@ -14,6 +14,8 @@ import lombok.Setter;
 @Setter
 public class TalkRoom implements Serializable {
 
+    // TODO serialVersionUID 추가
+
     private String roomId;
     private String name;
 
