@@ -1,6 +1,7 @@
 package com.basicbug.messenger.controller.message;
 
 import com.basicbug.messenger.model.message.TalkRoom;
+import com.basicbug.messenger.model.response.ListResponse;
 import com.basicbug.messenger.model.response.SingleResponse;
 import com.basicbug.messenger.model.user.User;
 import com.basicbug.messenger.repository.talk.TalkRoomRepository;
@@ -9,6 +10,7 @@ import com.basicbug.messenger.service.ResponseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +59,21 @@ public class TalkController {
 
     @ApiOperation(value = "참여하고 있는 채팅방 목록", notes = "현재 참여하고 있는 채팅방의 목록 리스트 반환")
     @PostMapping("/room/list")
-    public SingleResponse<List<TalkRoom>> getTalkRoomList() {
-        return null;
+    public ListResponse<TalkRoom> getTalkRoomList(
+        @ApiParam(value = "사용자 uid", required = true) @RequestParam String uid) {
+        User user = userRepository.findByUid(uid).orElse(null);
+
+        if (user == null) {
+            //TODO Invalid User Exception;
+            return null;
+        }
+
+        List<TalkRoom> talkRooms = new ArrayList<>();
+        for (String roomId : user.getRoomIds()) {
+            TalkRoom talkRoom = talkRoomRepository.findTalkRoomById(roomId);
+            talkRooms.add(talkRoom);
+        }
+
+        return responseService.getListResponse(talkRooms);
     }
 }
