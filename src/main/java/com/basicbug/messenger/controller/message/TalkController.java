@@ -2,7 +2,9 @@ package com.basicbug.messenger.controller.message;
 
 import com.basicbug.messenger.model.message.TalkRoom;
 import com.basicbug.messenger.model.response.SingleResponse;
+import com.basicbug.messenger.model.user.User;
 import com.basicbug.messenger.repository.talk.TalkRoomRepository;
+import com.basicbug.messenger.repository.user.UserRepository;
 import com.basicbug.messenger.service.ResponseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,6 +34,7 @@ public class TalkController {
 
     private final ResponseService responseService;
     private final TalkRoomRepository talkRoomRepository;
+    private final UserRepository userRepository;
 
     @ApiOperation(value = "채팅방 생성", notes = "명시된 사용자들이 추가된 채팅방 생성")
     @PostMapping("/create/room")
