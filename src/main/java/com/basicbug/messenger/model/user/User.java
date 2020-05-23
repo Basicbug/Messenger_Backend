@@ -54,6 +54,7 @@ public class User implements UserDetails {
     @Column(length = 100)
     private String status;
 
+    //TODO roomID 를 set 으로 관리하는 것이 더 좋은가.?
     @ElementCollection
     @Builder.Default
     private List<String> roomIds = new ArrayList<>();
@@ -101,5 +102,9 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    public void participateToRoom(String roomId) {
+        roomIds.add(roomId);
     }
 }

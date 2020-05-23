@@ -41,8 +41,19 @@ public class TalkController {
     @ApiOperation(value = "채팅방 생성", notes = "명시된 사용자들이 추가된 채팅방 생성")
     @PostMapping("/create/room")
     public SingleResponse<TalkRoom> createTalkRoom(
-        @ApiParam(value = "채팅방 이름", required = false, defaultValue = "기본 채팅방 이름") @RequestParam String name) {
+        @ApiParam(value = "채팅방 이름", required = false, defaultValue = "기본 채팅방 이름") @RequestParam String name,
+        @ApiParam(value = "생성자 uid", required = true) @RequestParam String uid) {
         TalkRoom talkRoom = talkRoomRepository.createTalkRoom(name);
+        User user = userRepository.findByUid(uid).orElse(null);
+
+        if (user == null) {
+            //TODO Invalid User Exception
+            return null;
+        }
+
+        user.participateToRoom(talkRoom.getRoomId());
+        userRepository.save(user);
+
         return responseService.getSingleResponse(talkRoom);
     }
 
