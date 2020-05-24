@@ -32,7 +32,11 @@ public class RedisProdConfig {
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() throws URISyntaxException {
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(RedisURI.create(new URI(System.getenv("REDIS_URL"))).toString());
+        RedisURI redisURI = RedisURI.create(new URI(System.getenv("REDIS_URL")));
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+        redisStandaloneConfiguration.setHostName(redisURI.getHost());
+        redisStandaloneConfiguration.setPort(redisURI.getPort());
+        redisStandaloneConfiguration.setPassword(redisURI.getPassword());
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
 
