@@ -27,18 +27,19 @@ public class StompHandler implements ChannelInterceptor {
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
 
+        String roomId = talkService.getRoomId((String) message.getHeaders().get("simpDestination"));
+        String sessionId = (String) message.getHeaders().get("simpSessionId");
+
         if (StompCommand.SUBSCRIBE == accessor.getCommand()) {
-            log.error("preSend with SUBSCRIBE");
-            //TODO session ID 가 항상 고정 값인지, 매번 접속마다 변하는 값인지 확인 필요.
-            String roomId = talkService.getRoomId((String) message.getHeaders().get("simpDestination"));
-            String sessionId = (String) message.getHeaders().get("simpSessionId");
-
-
+            log.error(roomId + " " + sessionId + " subscribe");
         } else if (StompCommand.UNSUBSCRIBE == accessor.getCommand()) {
-
+            log.error(roomId + " " + sessionId + " unsubscribe");
+        } else if (StompCommand.CONNECT == accessor.getCommand()) {
+            log.error(roomId + " " + sessionId + " connect");
+        } else if (StompCommand.SEND == accessor.getCommand()) {
+            log.error(roomId + " " + sessionId + " send");
         }
 
-        log.error("StompHandler preSend");
         return message;
     }
 }
