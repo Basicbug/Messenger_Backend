@@ -4,6 +4,7 @@ import com.basicbug.messenger.model.message.TalkMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
  * @author JaewonChoi
  */
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class RedisSubscriber {
@@ -19,6 +21,7 @@ public class RedisSubscriber {
     private final SimpMessageSendingOperations messageTemplate;
 
     public void sendMessage(String publishMessage) {
+        log.debug("RedisSubscriber " + publishMessage);
         try {
             TalkMessage talkMessage = objectMapper.readValue(publishMessage, TalkMessage.class);
             messageTemplate.convertAndSend("/sub/talk/room/" + talkMessage.getRoomId(), talkMessage);

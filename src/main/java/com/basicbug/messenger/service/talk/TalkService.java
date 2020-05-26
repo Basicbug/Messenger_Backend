@@ -3,6 +3,7 @@ package com.basicbug.messenger.service.talk;
 import com.basicbug.messenger.model.message.TalkMessage;
 import com.basicbug.messenger.repository.talk.TalkRoomRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
  * @author JaewonChoi
  */
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class TalkService {
@@ -33,8 +35,13 @@ public class TalkService {
         }
     }
 
+    /**
+     * channelTopic 에 메세지를 전달한다.
+     * @param talkMessage 전달하고자 하는 메세지
+     */
     public void sendTalkMessage(TalkMessage talkMessage) {
-
+        log.debug("TalkService " + "sendTalkMessage " + talkMessage);
+        redisTemplate.convertAndSend(channelTopic.getTopic(), talkMessage);
     }
 
 }

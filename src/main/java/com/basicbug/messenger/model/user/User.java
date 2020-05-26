@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -54,10 +56,10 @@ public class User implements UserDetails {
     @Column(length = 100)
     private String status;
 
-    //TODO roomID 를 set 으로 관리하는 것이 더 좋은가.?
+    //TODO roomID 를 set 으로 관리하는 것이 더 좋은가.? -> 혹시나 중복으로 들어올 수 있는 경우 방지
     @ElementCollection
     @Builder.Default
-    private List<String> roomIds = new ArrayList<>();
+    private Set<String> roomIds = new HashSet<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
@@ -104,7 +106,19 @@ public class User implements UserDetails {
         return false;
     }
 
+    /**
+     * 사용자가 roomId 를 가진 채팅방에 참여한다.
+     * @param roomId 채팅방 id
+     */
     public void participateToRoom(String roomId) {
         roomIds.add(roomId);
+    }
+
+    /**
+     * 사용자가 roomId 를 가진 채팅방을 나온다.
+     * @param roomId 채팅방 id
+     */
+    public void leaveFromRoom(String roomId) {
+        roomIds.remove(roomId);
     }
 }
