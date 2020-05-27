@@ -38,7 +38,7 @@ public class FriendsController {
 
     @ApiOperation(value = "친구 목록", notes = "사용자의 친구 리스트를 반환")
     @GetMapping("/{uid}")
-    public ListResponse<Friends> fidnAllFriends(
+    public ListResponse<Friends> findAllFriends(
         @ApiParam(value = "사용자 uid", required = true) @PathVariable String uid) {
 
         return responseService.getListResponse(friendsService.getAllFriends(uid));
