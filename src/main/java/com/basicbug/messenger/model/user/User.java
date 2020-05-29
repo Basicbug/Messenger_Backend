@@ -57,7 +57,7 @@ public class User implements UserDetails {
     private String status;
 
     //TODO roomID 를 set 으로 관리하는 것이 더 좋은가.? -> 혹시나 중복으로 들어올 수 있는 경우 방지
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private Set<String> roomIds = new HashSet<>();
 

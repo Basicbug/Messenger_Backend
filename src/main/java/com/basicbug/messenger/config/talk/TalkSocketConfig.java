@@ -30,7 +30,7 @@ public class TalkSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/stomp").setAllowedOrigins("*").withSockJS();
+        registry.addEndpoint("/stomp", "/stomp/websocket").setAllowedOrigins("*").withSockJS();
     }
 
     @Override
