@@ -6,7 +6,7 @@ spring:
         naver:
             client_id: ${NAVER_CLIENT_ID}
             client_secret: ${NAVER_CLIENT_SECRET}
-            redirect: /social/login/naver
+            redirect: /v1/social/login/naver
             url:
                 login: https://nid.naver.com/oauth2.0/authorize
                 token: https://nid.naver.com/oauth2.0/token
