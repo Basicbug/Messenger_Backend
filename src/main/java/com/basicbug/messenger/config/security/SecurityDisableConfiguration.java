@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @RequiredArgsConstructor
 @Configuration
-@Profile("dev")
+@Profile("disable")
 public class SecurityDisableConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
