@@ -86,7 +86,7 @@ public class SocialController {
         User user = userRepository.findByUidAndProvider(profile.getResponse().getId(), provider).orElseThrow(
             UserNotFoundException::new);
 
-        return responseService.getSingleResponse(jwtTokenProvider.createToken(String.valueOf(user.getId()), user.getRoles()));
+        return responseService.getSingleResponse(jwtTokenProvider.createToken(String.valueOf(user.getUid()), user.getRoles()));
     }
 
     @ApiOperation(value = "소셜 가입", notes = "소셜 계정을 이용한 회원가입")

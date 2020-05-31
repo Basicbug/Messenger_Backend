@@ -22,6 +22,6 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userPk) throws UsernameNotFoundException {
         //TODO userPk needs to be renamed
 
-        return userRepository.findById(Long.valueOf(userPk)).orElseThrow(EmailSigninFailedException::new);
+        return userRepository.findByUid(userPk).orElseThrow(EmailSigninFailedException::new);
     }
 }
