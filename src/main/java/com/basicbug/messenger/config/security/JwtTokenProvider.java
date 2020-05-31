@@ -84,11 +84,21 @@ public class JwtTokenProvider {
     }
 
     /**
+     * Authorization bearer 값에서 token 값 파싱.
+     * @param bearerToken
+     * @return 파싱된 token 값
+     */
+    public String resolveToken(String bearerToken) {
+        return bearerToken.replace("Bearer", "").trim();
+    }
+
+    /**
      * JWT token 유효성 및 만료기간 확인
      * @param token
      * @return 유효하다면 true, 아니면 false
      */
     public boolean validateToken(String token) {
+        //TODO parsing error handling (invalid format, expire ...)
         Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
         return !claims.getBody().getExpiration().before(new Date());
     }
