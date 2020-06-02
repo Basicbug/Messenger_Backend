@@ -1,10 +1,12 @@
 package com.basicbug.messenger.repository.talk;
 
 import com.basicbug.messenger.model.message.TalkRoom;
+import com.basicbug.messenger.model.user.User;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Repository;
@@ -18,13 +20,12 @@ import org.springframework.stereotype.Repository;
 public class TalkRoomRepository {
 
     private static final String TALK_ROOM = "TALK_ROOM";
-    private static final String PARTICIPANT = "PARTICIPANT";
 
     @Resource(name = "redisTemplate")
     private HashOperations<String, String, TalkRoom> hashOpsTalkRoom;
 
     @Resource(name = "redisTemplate")
-    private HashOperations<String, String, String> hashOpsParticipants;
+    private ListOperations<String, String> listOpsUser;
 
     public TalkRoom createTalkRoom(String name) {
         TalkRoom talkRoom = TalkRoom.create(name);
@@ -36,16 +37,19 @@ public class TalkRoomRepository {
         return hashOpsTalkRoom.get(TALK_ROOM, roomId);
     }
 
-    /**
-     * sessionID 를 가진 사용자가 roomID 를 가진 채팅방에 참여
-     * @param sessionId 사용자 sessionID
-     * @param roomId 대상 채팅방의 roomID
-     */
-    public void participateTalkRoom(String sessionId, String roomId) {
-        hashOpsParticipants.put(PARTICIPANT, sessionId, roomId);
+    public void joinRoom(User user, String roomId) {
+        listOpsUser.leftPush(user.getUid(), roomId);
     }
-
-    public void quitTalkRoom(String sessionId, String roomId) {
+    
+    public void leaveRoom(User user, String roomId) {
+        listOpsUser.remove(user.getUid(), 1, roomId);
+    }
+    /**
+     * 유저가 참여하고 있는 채팅방 목록 반환
+     * @param user
+     * @return
+     */
+    public TalkRoom findAllTalkRoomWithUser(User user) {
 
     }
 

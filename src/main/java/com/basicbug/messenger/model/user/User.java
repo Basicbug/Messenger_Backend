@@ -56,11 +56,6 @@ public class User implements UserDetails {
     @Column(length = 100)
     private String status;
 
-    //TODO roomID 를 set 으로 관리하는 것이 더 좋은가.? -> 혹시나 중복으로 들어올 수 있는 경우 방지
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
-    private Set<String> roomIds = new HashSet<>();
-
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
@@ -104,21 +99,5 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
-    }
-
-    /**
-     * 사용자가 roomId 를 가진 채팅방에 참여한다.
-     * @param roomId 채팅방 id
-     */
-    public void participateToRoom(String roomId) {
-        roomIds.add(roomId);
-    }
-
-    /**
-     * 사용자가 roomId 를 가진 채팅방을 나온다.
-     * @param roomId 채팅방 id
-     */
-    public void leaveFromRoom(String roomId) {
-        roomIds.remove(roomId);
     }
 }

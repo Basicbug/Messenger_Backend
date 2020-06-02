@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,8 +52,9 @@ public class TalkController {
             return null;
         }
 
-        user.participateToRoom(talkRoom.getRoomId());
         userRepository.save(user);
+
+        talkRoom.participate(user);
 
         return responseService.getSingleResponse(talkRoom);
     }
@@ -69,11 +71,17 @@ public class TalkController {
         }
 
         List<TalkRoom> talkRooms = new ArrayList<>();
-        for (String roomId : user.getRoomIds()) {
-            TalkRoom talkRoom = talkRoomRepository.findTalkRoomById(roomId);
-            talkRooms.add(talkRoom);
-        }
+//        for (String roomId : user.getRoomIds()) {
+//            TalkRoom talkRoom = talkRoomRepository.findTalkRoomById(roomId);
+//            talkRooms.add(talkRoom);
+//        }
 
         return responseService.getListResponse(talkRooms);
+    }
+
+    @ApiOperation(value = "채팅방 상세 정보", notes = "명시된 채팅방에 대한 정보를 반환")
+    @GetMapping("/room/detail")
+    public void getTalkRoomDetail() {
+
     }
 }
