@@ -2,10 +2,9 @@ package com.basicbug.messenger.config.handler;
 
 import com.basicbug.messenger.config.security.JwtTokenProvider;
 import com.basicbug.messenger.model.user.User;
-import com.basicbug.messenger.repository.talk.TalkRoomRepository;
+import com.basicbug.messenger.repository.talk.TalkRoomRepositoryTemp;
 import com.basicbug.messenger.repository.user.UserRepository;
 import com.basicbug.messenger.service.talk.TalkService;
-import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
@@ -13,9 +12,6 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,7 +24,7 @@ import org.springframework.stereotype.Component;
 public class StompHandler implements ChannelInterceptor {
 
     private final TalkService talkService;
-    private final TalkRoomRepository talkRoomRepository;
+    private final TalkRoomRepositoryTemp talkRoomRepositoryTemp;
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -56,7 +52,7 @@ public class StompHandler implements ChannelInterceptor {
         } else if (StompCommand.SUBSCRIBE == accessor.getCommand()) {
             String roomId = talkService.getRoomId(accessor.getDestination());
 
-            if (talkRoomRepository.findTalkRoomById(roomId) == null) {
+            if (talkRoomRepositoryTemp.findTalkRoomById(roomId) == null) {
                 log.error("stomp subscribe to room that does not exists " + roomId);
                 return null;
             }
@@ -69,13 +65,13 @@ public class StompHandler implements ChannelInterceptor {
                 return null;
             }
 
-            user.participateToRoom(roomId);
+//            user.participateToRoom(roomId);
 
         } else if (StompCommand.UNSUBSCRIBE == accessor.getCommand()) {
             String roomId = talkService.getRoomId(accessor.getDestination());
             log.info("stomp.unsubscribe roomId " + roomId);
 
-            if (talkRoomRepository.findTalkRoomById(roomId) == null) {
+            if (talkRoomRepositoryTemp.findTalkRoomById(roomId) == null) {
                 log.error("Unsubscribe to invalid roomId " + roomId);
                 return null;
             }
@@ -86,7 +82,7 @@ public class StompHandler implements ChannelInterceptor {
                 return null;
             }
 
-            user.leaveFromRoom(roomId);
+//            user.leaveFromRoom(roomId);
         } else if (StompCommand.DISCONNECT == accessor.getCommand()) {
             log.info("stomp disconnect");
         } else if (StompCommand.SEND == accessor.getCommand()) {

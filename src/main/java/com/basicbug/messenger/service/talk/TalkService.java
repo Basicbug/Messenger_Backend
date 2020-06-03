@@ -1,7 +1,7 @@
 package com.basicbug.messenger.service.talk;
 
 import com.basicbug.messenger.model.message.TalkMessage;
-import com.basicbug.messenger.repository.talk.TalkRoomRepository;
+import com.basicbug.messenger.repository.talk.TalkRoomRepositoryTemp;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -19,7 +19,7 @@ public class TalkService {
 
     private final ChannelTopic channelTopic;
     private final RedisTemplate redisTemplate;
-    private final TalkRoomRepository talkRoomRepository;
+    private final TalkRoomRepositoryTemp talkRoomRepositoryTemp;
 
     /**
      * destination 의 URL 의 제일 마지막에 위치한 roomId 추출.

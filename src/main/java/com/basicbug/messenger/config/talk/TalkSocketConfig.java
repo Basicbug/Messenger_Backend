@@ -15,7 +15,6 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
  */
 
 @Configuration
-@EnableWebSocket
 @EnableWebSocketMessageBroker
 @RequiredArgsConstructor
 public class TalkSocketConfig implements WebSocketMessageBrokerConfigurer {

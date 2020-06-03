@@ -1,10 +1,11 @@
 package com.basicbug.messenger.config.redis;
 
-import com.basicbug.messenger.pubsub.RedisSubscriber;
+import com.basicbug.messenger.redis.RedisSubscriber;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
@@ -35,7 +36,7 @@ public class RedisDevConfig {
 
     @Bean
     public MessageListenerAdapter listenerAdapter(RedisSubscriber subscriber) {
-        return new MessageListenerAdapter(subscriber, "sendMessage");
+        return new MessageListenerAdapter(subscriber);
     }
 
     @Bean

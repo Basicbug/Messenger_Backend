@@ -1,4 +1,4 @@
-package com.basicbug.messenger.pubsub;
+package com.basicbug.messenger.redis;
 
 import com.basicbug.messenger.model.message.TalkMessage;
 import lombok.RequiredArgsConstructor;

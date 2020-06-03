@@ -4,7 +4,7 @@ import com.basicbug.messenger.model.message.TalkRoom;
 import com.basicbug.messenger.model.response.ListResponse;
 import com.basicbug.messenger.model.response.SingleResponse;
 import com.basicbug.messenger.model.user.User;
-import com.basicbug.messenger.repository.talk.TalkRoomRepository;
+import com.basicbug.messenger.repository.talk.TalkRoomRepositoryTemp;
 import com.basicbug.messenger.repository.user.UserRepository;
 import com.basicbug.messenger.service.ResponseService;
 import io.swagger.annotations.Api;
@@ -36,7 +36,7 @@ public class TalkController {
     private Logger logger = LoggerFactory.getLogger(TalkController.class);
 
     private final ResponseService responseService;
-    private final TalkRoomRepository talkRoomRepository;
+    private final TalkRoomRepositoryTemp talkRoomRepositoryTemp;
     private final UserRepository userRepository;
 
     @ApiOperation(value = "채팅방 생성", notes = "명시된 사용자들이 추가된 채팅방 생성")
@@ -44,7 +44,7 @@ public class TalkController {
     public SingleResponse<TalkRoom> createTalkRoom(
         @ApiParam(value = "채팅방 이름", required = false, defaultValue = "기본 채팅방 이름") @RequestParam String name,
         @ApiParam(value = "생성자 uid", required = true) @RequestParam String uid) {
-        TalkRoom talkRoom = talkRoomRepository.createTalkRoom(name);
+        TalkRoom talkRoom = talkRoomRepositoryTemp.createTalkRoom(name);
         User user = userRepository.findByUid(uid).orElse(null);
 
         if (user == null) {

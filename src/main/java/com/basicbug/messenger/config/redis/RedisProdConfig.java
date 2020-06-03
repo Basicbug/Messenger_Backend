@@ -1,6 +1,6 @@
 package com.basicbug.messenger.config.redis;
 
-import com.basicbug.messenger.pubsub.RedisSubscriber;
+import com.basicbug.messenger.redis.RedisSubscriber;
 import io.lettuce.core.RedisURI;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
