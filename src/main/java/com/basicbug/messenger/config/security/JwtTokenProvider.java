@@ -1,15 +1,20 @@
 package com.basicbug.messenger.config.security;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,6 +26,7 @@ import org.springframework.stereotype.Component;
  * @author JaewonChoi
  */
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class JwtTokenProvider {
@@ -99,7 +105,19 @@ public class JwtTokenProvider {
      */
     public boolean validateToken(String token) {
         //TODO parsing error handling (invalid format, expire ...)
-        Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-        return !claims.getBody().getExpiration().before(new Date());
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+        } catch (UnsupportedJwtException | MalformedJwtException | IllegalArgumentException e) {
+            log.error("Invalid Jwt format", e.getMessage());
+            return false;
+        } catch (SignatureException e) {
+            log.error("JWS Signature validation fail", e.getMessage());
+            return false;
+        } catch (ExpiredJwtException e) {
+            log.error("JWT is expired", e.getMessage());
+            return false;
+        }
+
+        return true;
     }
 }
