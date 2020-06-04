@@ -22,8 +22,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisDevConfig {
 
     @Bean
-    public ChannelTopic channelTopic() {
-        return new ChannelTopic("talkroom");
+    ChannelTopic topic() {
+        return new ChannelTopic("messageQueue");
     }
 
     @Bean

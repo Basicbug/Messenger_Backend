@@ -21,7 +21,7 @@ public class MessageController {
 
     private final RedisPublisher redisPublisher;
     private final TalkRoomService talkRoomService;
-    
+
     @MessageMapping("/talk/message")
     public void sendMessage(TalkMessage message) {
         log.debug("sendMessage in /talk/message " + message.getRoomId());

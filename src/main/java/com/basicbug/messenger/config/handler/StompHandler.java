@@ -2,7 +2,7 @@ package com.basicbug.messenger.config.handler;
 
 import com.basicbug.messenger.config.security.JwtTokenProvider;
 import com.basicbug.messenger.model.user.User;
-import com.basicbug.messenger.repository.talk.TalkRoomRepositoryTemp;
+import com.basicbug.messenger.repository.talk.TalkRoomRepository;
 import com.basicbug.messenger.repository.user.UserRepository;
 import com.basicbug.messenger.service.talk.TalkService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 public class StompHandler implements ChannelInterceptor {
 
     private final TalkService talkService;
-    private final TalkRoomRepositoryTemp talkRoomRepositoryTemp;
+    private final TalkRoomRepository talkRoomRepository;
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -46,16 +46,16 @@ public class StompHandler implements ChannelInterceptor {
                 return null;
             }
 
+            //TODO security context 에 user 를 추가..?
             accessor.setUser(jwtTokenProvider.getAuthentication(token));
             log.info("Stomp connect success " + accessor.getUser().getName());
-
         } else if (StompCommand.SUBSCRIBE == accessor.getCommand()) {
             String roomId = talkService.getRoomId(accessor.getDestination());
 
-            if (talkRoomRepositoryTemp.findTalkRoomById(roomId) == null) {
-                log.error("stomp subscribe to room that does not exists " + roomId);
-                return null;
-            }
+//            if (talkRoomRepositoryTemp.findTalkRoomById(roomId) == null) {
+//                log.error("stomp subscribe to room that does not exists " + roomId);
+//                return null;
+//            }
 
             //TODO 명시된 사용자의 구독 목록에 roomId 추가.
             User user = userRepository.findByUid("qwebnm7788").orElse(null);
@@ -71,10 +71,10 @@ public class StompHandler implements ChannelInterceptor {
             String roomId = talkService.getRoomId(accessor.getDestination());
             log.info("stomp.unsubscribe roomId " + roomId);
 
-            if (talkRoomRepositoryTemp.findTalkRoomById(roomId) == null) {
-                log.error("Unsubscribe to invalid roomId " + roomId);
-                return null;
-            }
+//            if (talkRoomRepositoryTemp.findTalkRoomById(roomId) == null) {
+//                log.error("Unsubscribe to invalid roomId " + roomId);
+//                return null;
+//            }
 
             User user = userRepository.findByUid("qwebnm7788").orElse(null);
             if (user == null) {
