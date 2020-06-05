@@ -1,6 +1,7 @@
 package com.basicbug.messenger.model.message;
 
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +11,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * @author JaewonChoi
@@ -28,8 +28,15 @@ public class TalkMessage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name = "room_id")
     private String roomId;
+
+    @Column(name = "sender_uid")
     private String senderUid;
+
+    @Column(name = "message")
     private String message;
+
+    @Column(name = "timestamp")
     private LocalDateTime timestamp;
 }

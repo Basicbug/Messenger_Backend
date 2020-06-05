@@ -1,16 +1,16 @@
 package com.basicbug.messenger.model.message;
 
 import com.basicbug.messenger.model.user.User;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import javax.persistence.ElementCollection;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,29 +28,24 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TalkRoom implements Serializable {
+public class TalkRoom {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name = "room_id", nullable = false, unique = true)
     private String roomId;
+
+    @Column(name = "name")
     private String name;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
+    @ManyToMany(mappedBy = "participating_rooms")
     private List<User> participants = new ArrayList<>();
 
     @OneToOne
+    @JoinColumn(name = "last_message_timestamp")
     private TalkMessage lastMessage;
-
-    public static TalkRoom create(String name) {
-        TalkRoom talkRoom = new TalkRoom();
-        talkRoom.roomId = UUID.randomUUID().toString();
-        talkRoom.name = name;
-        talkRoom.participants = new ArrayList<>();
-        return talkRoom;
-    }
 
     public void participate(User user) {
         participants.add(user);
