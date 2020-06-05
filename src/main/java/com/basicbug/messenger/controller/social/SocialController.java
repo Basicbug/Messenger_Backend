@@ -38,8 +38,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Api(tags = {"Social"})
 @Slf4j
-@RequiredArgsConstructor
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/v1/social")
 public class SocialController {
 

@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = {"Talk"})
 @Slf4j
-@RequiredArgsConstructor
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/v1/talk")
 public class TalkController {
 

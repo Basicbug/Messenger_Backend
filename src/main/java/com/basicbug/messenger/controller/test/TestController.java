@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @Api(tags = {"Test"})
-@RequiredArgsConstructor
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/v1/test")
 public class TestController {
 

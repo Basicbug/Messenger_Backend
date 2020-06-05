@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = {"Friends"})
 @Slf4j
-@RequiredArgsConstructor
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/v1/friends")
 public class FriendsController {
 

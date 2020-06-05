@@ -24,8 +24,8 @@ import org.springframework.web.client.RestTemplate;
  */
 
 @Slf4j
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class NaverService {
 
     private Logger logger = LoggerFactory.getLogger(NaverService.class);

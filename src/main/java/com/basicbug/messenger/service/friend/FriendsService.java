@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
  */
 
 @Slf4j
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class FriendsService {
 
     private Logger logger = LoggerFactory.getLogger(FriendsService.class);
