@@ -4,6 +4,7 @@ import com.basicbug.messenger.model.message.TalkMessage;
 import com.basicbug.messenger.model.message.TalkRoom;
 import com.basicbug.messenger.model.user.User;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
 public class TalkRoomDetailResponseDto {
 
     private String roomId;

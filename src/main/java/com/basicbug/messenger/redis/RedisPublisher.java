@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
  */
 
 @Slf4j
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class RedisPublisher {
 
     private final RedisTemplate<String, Object> redisTemplate;

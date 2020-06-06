@@ -25,6 +25,7 @@ public class MessageController {
     @MessageMapping("/talk/message")
     public void sendMessage(TalkMessage message) {
         log.debug("sendMessage in /talk/message " + message.getRoomId());
-        redisPublisher.publish(talkRoomService.getTopic(message.getRoomId()), message);
+//        redisPublisher.publish(talkRoomService.createOrGetTopic(message.getRoomId()), message);
+        redisPublisher.publish(new ChannelTopic("messageQueue"), message);
     }
 }
