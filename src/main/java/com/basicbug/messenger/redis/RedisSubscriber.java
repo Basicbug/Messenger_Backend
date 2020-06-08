@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +32,7 @@ public class RedisSubscriber implements MessageListener {
             String messageStr = redisTemplate.getStringSerializer().deserialize(message.getBody());
             TalkMessage publishedMessage = objectMapper.readValue(messageStr, TalkMessage.class);
 
-            log.debug("onMessage to " + publishedMessage.getRoomId() + " from " + publishedMessage.getSenderUid());
+            log.error("onMessage to " + publishedMessage.getRoomId() + " from " + publishedMessage.getSenderUid());
             messagingTemplate.convertAndSend(talkRoomService.getTopic(publishedMessage.getRoomId()).getTopic(), publishedMessage);
         } catch (JsonProcessingException e) {
             e.printStackTrace();

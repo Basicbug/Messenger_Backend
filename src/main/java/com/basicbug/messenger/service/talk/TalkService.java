@@ -2,16 +2,16 @@ package com.basicbug.messenger.service.talk;
 
 import com.basicbug.messenger.dto.talk.response.TalkRoomBasicResponseDto;
 import com.basicbug.messenger.dto.talk.response.TalkRoomDetailResponseDto;
-import com.basicbug.messenger.model.message.TalkMessage;
 import com.basicbug.messenger.model.message.TalkRoom;
 import com.basicbug.messenger.model.user.User;
+import com.basicbug.messenger.redis.RedisSubscriber;
 import com.basicbug.messenger.service.user.UserService;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,8 +23,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TalkService {
 
-    private final ChannelTopic channelTopic;
-    private final RedisTemplate redisTemplate;
     private final TalkRoomService talkRoomService;
     private final UserService userService;
 
@@ -42,14 +40,8 @@ public class TalkService {
         }
     }
 
-    /**
-     * channelTopic 에 메세지를 전달한다.
-     *
-     * @param talkMessage 전달하고자 하는 메세지
-     */
-    public void sendTalkMessage(TalkMessage talkMessage) {
-        log.debug("TalkService " + "sendTalkMessage " + talkMessage);
-        redisTemplate.convertAndSend(channelTopic.getTopic(), talkMessage);
+    public ChannelTopic getTopic(String roomId) {
+        return talkRoomService.getTopic(roomId);
     }
 
     /**
