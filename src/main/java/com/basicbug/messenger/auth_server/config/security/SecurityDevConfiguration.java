@@ -1,10 +1,11 @@
-package com.basicbug.messenger.api_server.config.security;
+package com.basicbug.messenger.auth_server.config.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -21,6 +22,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 public class SecurityDevConfiguration extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final AuthenticationProvider authenticationProvider;
 
     @Bean
     @Override
@@ -56,7 +58,8 @@ public class SecurityDevConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
+        auth.authenticationProvider(authenticationProvider)
+            .inMemoryAuthentication()
             .withUser("qwebnm7788")
             .password("password")
             .roles("USER");

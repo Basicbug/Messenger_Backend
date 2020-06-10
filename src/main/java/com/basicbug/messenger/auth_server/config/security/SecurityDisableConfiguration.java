@@ -1,4 +1,4 @@
-package com.basicbug.messenger.api_server.config.security;
+package com.basicbug.messenger.auth_server.config.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

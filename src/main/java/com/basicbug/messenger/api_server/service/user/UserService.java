@@ -3,6 +3,7 @@ package com.basicbug.messenger.api_server.service.user;
 import com.basicbug.messenger.api_server.exception.EmailSigninFailedException;
 import com.basicbug.messenger.api_server.model.user.User;
 import com.basicbug.messenger.api_server.repository.user.UserRepository;
+import com.basicbug.messenger.auth_server.exception.UidNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +20,20 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
+    //TODO UserDetailsService 와 User 를 다루는 또 다른 서비스를 구분해야 할까?
+
     private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String uid) throws UsernameNotFoundException {
 
-        return userRepository.findByUid(uid).orElseThrow(EmailSigninFailedException::new);
+        User user = findUserByUid(uid);
+        if (uid == null) {
+            //TODO Exception handling 필요
+            throw new UidNotFoundException();
+        }
+
+        return user;
     }
 
     public List<User> findUsersByUid(List<String> uids) {

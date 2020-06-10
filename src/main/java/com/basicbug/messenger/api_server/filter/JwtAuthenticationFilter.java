@@ -1,6 +1,6 @@
 package com.basicbug.messenger.api_server.filter;
 
-import com.basicbug.messenger.api_server.config.security.JwtTokenProvider;
+import com.basicbug.messenger.auth_server.config.security.JwtTokenProvider;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

@@ -1,6 +1,6 @@
 package com.basicbug.messenger.chatting_server.config.handler;
 
-import com.basicbug.messenger.api_server.config.security.JwtTokenProvider;
+import com.basicbug.messenger.auth_server.config.security.JwtTokenProvider;
 import com.basicbug.messenger.api_server.model.user.User;
 import com.basicbug.messenger.api_server.repository.talk.TalkRoomRepository;
 import com.basicbug.messenger.api_server.repository.user.UserRepository;

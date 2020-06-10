@@ -1,6 +1,5 @@
 package com.basicbug.messenger.api_server.controller.social;
 
-import com.basicbug.messenger.api_server.config.security.JwtTokenProvider;
 import com.basicbug.messenger.api_server.dto.social.JwtTokenResponse;
 import com.basicbug.messenger.api_server.exception.UserExistException;
 import com.basicbug.messenger.api_server.exception.UserNotFoundException;
@@ -12,6 +11,7 @@ import com.basicbug.messenger.api_server.model.user.User;
 import com.basicbug.messenger.api_server.repository.user.UserRepository;
 import com.basicbug.messenger.api_server.service.social.NaverService;
 import com.basicbug.messenger.api_server.service.ResponseService;
+import com.basicbug.messenger.auth_server.config.security.JwtTokenProvider;
 import com.google.gson.Gson;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

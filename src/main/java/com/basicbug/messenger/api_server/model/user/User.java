@@ -78,7 +78,7 @@ public class User implements UserDetails {
     @JsonProperty(access = Access.WRITE_ONLY)
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @JsonProperty(access = Access.WRITE_ONLY)

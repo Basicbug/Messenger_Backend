@@ -1,9 +1,9 @@
 package com.basicbug.messenger.api_server.controller.test;
 
-import com.basicbug.messenger.api_server.config.security.JwtTokenProvider;
 import com.basicbug.messenger.api_server.dto.social.JwtTokenResponse;
 import com.basicbug.messenger.api_server.model.response.SingleResponse;
 import com.basicbug.messenger.api_server.service.ResponseService;
+import com.basicbug.messenger.auth_server.config.security.JwtTokenProvider;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

@@ -1,4 +1,4 @@
-package com.basicbug.messenger.api_server.config.security;
+package com.basicbug.messenger.auth_server.config.security;
 
 import java.io.IOException;
 import javax.servlet.FilterChain;
