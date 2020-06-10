@@ -1,6 +1,7 @@
 package com.basicbug.messenger.api_server.controller.test;
 
 import com.basicbug.messenger.api_server.config.security.JwtTokenProvider;
+import com.basicbug.messenger.api_server.dto.social.JwtTokenResponse;
 import com.basicbug.messenger.api_server.model.response.SingleResponse;
 import com.basicbug.messenger.api_server.service.ResponseService;
 import io.swagger.annotations.Api;
@@ -30,10 +31,10 @@ public class TestController {
 
     @ApiOperation(value = "테스트용 jwt 토큰 생성", notes = "임시로 사용할 jwt 토큰 생성")
     @PostMapping("/create/token")
-    public SingleResponse<String> createJwtTokenForTestUser(
+    public SingleResponse<JwtTokenResponse> createJwtTokenForTestUser(
         @ApiParam(value = "사용자 uid", required = true) @RequestParam String uid
     ) {
         log.info("createJwtTokenForTestUser " + uid);
-        return responseService.getSingleResponse(jwtTokenProvider.createToken(uid, Arrays.asList("ROLE_USER")));
+        return responseService.getSingleResponse(new JwtTokenResponse(jwtTokenProvider.createToken(uid, Arrays.asList("ROLE_USER"))));
     }
 }

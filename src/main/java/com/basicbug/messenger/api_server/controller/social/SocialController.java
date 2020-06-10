@@ -1,6 +1,7 @@
 package com.basicbug.messenger.api_server.controller.social;
 
 import com.basicbug.messenger.api_server.config.security.JwtTokenProvider;
+import com.basicbug.messenger.api_server.dto.social.JwtTokenResponse;
 import com.basicbug.messenger.api_server.exception.UserExistException;
 import com.basicbug.messenger.api_server.exception.UserNotFoundException;
 import com.basicbug.messenger.api_server.model.response.CommonResponse;
@@ -78,7 +79,7 @@ public class SocialController {
 
     @ApiOperation(value = "소셜 로그인", notes = "엑세스 토큰을 이용한 로그인")
     @PostMapping(value = "/signin/{provider}")
-    public SingleResponse<String> loginByProvider(
+    public SingleResponse<JwtTokenResponse> loginByProvider(
         @ApiParam(value = "서비스 제공자", defaultValue = "naver") @PathVariable String provider,
         @ApiParam(value = "access token", required = true) @RequestParam String accessToken) {
 
@@ -86,7 +87,7 @@ public class SocialController {
         User user = userRepository.findByUidAndProvider(profile.getResponse().getId(), provider).orElseThrow(
             UserNotFoundException::new);
 
-        return responseService.getSingleResponse(jwtTokenProvider.createToken(String.valueOf(user.getUid()), user.getRoles()));
+        return responseService.getSingleResponse(new JwtTokenResponse(jwtTokenProvider.createToken(String.valueOf(user.getUid()), user.getRoles())));
     }
 
     @ApiOperation(value = "소셜 가입", notes = "소셜 계정을 이용한 회원가입")
