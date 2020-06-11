@@ -78,37 +78,43 @@ public class SocialController {
     }
 
     @ApiOperation(value = "소셜 로그인", notes = "엑세스 토큰을 이용한 로그인")
-    @PostMapping(value = "/signin/{provider}")
+    @PostMapping(value = "/signin")
     public SingleResponse<JwtTokenResponse> loginByProvider(
-        @ApiParam(value = "서비스 제공자", defaultValue = "naver") @PathVariable String provider,
+        @ApiParam(value = "서비스 제공자") @RequestParam String provider,
         @ApiParam(value = "access token", required = true) @RequestParam String accessToken) {
 
-        NaverProfile profile = naverService.getNaverProfile(accessToken);
-        User user = userRepository.findByUidAndProvider(profile.getResponse().getId(), provider).orElseThrow(
-            UserNotFoundException::new);
+        String uid = "";
+        String name = "";
 
-        return responseService.getSingleResponse(new JwtTokenResponse(jwtTokenProvider.createToken(String.valueOf(user.getUid()), user.getRoles())));
-    }
+        if (provider.isEmpty()) {
+            // 일반 인증
+        } else if (provider.toLowerCase().equals("naver")) {
+            // Naver social login 이후
+            NaverProfile profile = naverService.getNaverProfile(accessToken);
+            if (profile == null) {
+                // TODO naver access token 이 유효하지 않음.
+                return null;
+            }
 
-    @ApiOperation(value = "소셜 가입", notes = "소셜 계정을 이용한 회원가입")
-    @PostMapping(value = "/signup/{provider}")
-    public CommonResponse signupByProvider(
-        @ApiParam(value = "서비스 제공자", required = true, defaultValue = "naver") @PathVariable String provider,
-        @ApiParam(value = "access token", required = true) @RequestParam String accessToken) {
-
-        NaverProfile profile = naverService.getNaverProfile(accessToken);
-        Optional<User> user = userRepository.findByUidAndProvider(profile.getResponse().getId(), provider);
-        if (user.isPresent()) {
-            throw new UserExistException();
+            uid = profile.getResponse().getId();
+            name = profile.getResponse().getName();
         }
 
-        userRepository.save(User.builder()
-            .uid(profile.getResponse().getId())
-            .provider(provider)
-            .name(profile.getResponse().getName())
-            .roles(Collections.singletonList("ROLE_USER")).build());
+        Optional<User> user = userRepository.findByUidAndProvider(uid, provider);
 
-        return responseService.getSuccessResponse();
+        if (!user.isPresent()) {
+            userRepository.save(User.builder()
+                .uid(uid)
+                .provider(provider)
+                .name(name)
+                .roles(Collections.singletonList("ROLE_USER"))
+                .build());
+
+            user = userRepository.findByUidAndProvider(uid, provider);
+        }
+
+        return responseService.getSingleResponse(
+            new JwtTokenResponse(jwtTokenProvider.createToken(String.valueOf(user.get().getUid()), user.get().getRoles())));
     }
 
     @GetMapping(value = "/login/naver")
