@@ -100,9 +100,9 @@ public class SocialController {
             name = profile.getResponse().getName();
         }
 
-        Optional<User> user = userRepository.findByUidAndProvider(uid, provider);
+        User user = userRepository.findByUidAndProvider(uid, provider).orElse(null);
 
-        if (!user.isPresent()) {
+        if (user == null) {
             userRepository.save(User.builder()
                 .uid(uid)
                 .provider(provider)
@@ -110,11 +110,13 @@ public class SocialController {
                 .roles(Collections.singletonList("ROLE_USER"))
                 .build());
 
-            user = userRepository.findByUidAndProvider(uid, provider);
+            // TODO 디비에 정상적으로 저장되지 않은 에러 케이스에 대한 Custom Exception 추가 필요.
+            user = userRepository.findByUidAndProvider(uid, provider).orElseThrow(() -> new RuntimeException());
         }
 
+        // Social login 혹은 커스텀한 일반 인증을 통해 얻은 사용자 정보로 jwt token 발급.
         return responseService.getSingleResponse(
-            new JwtTokenResponse(jwtTokenProvider.createToken(String.valueOf(user.get().getUid()), user.get().getRoles())));
+            new JwtTokenResponse(jwtTokenProvider.createToken(String.valueOf(user.getUid()), user.getRoles())));
     }
 
     @GetMapping(value = "/login/naver")

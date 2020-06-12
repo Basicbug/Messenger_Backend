@@ -24,12 +24,6 @@ public class SecurityDevConfiguration extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationProvider authenticationProvider;
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -63,5 +57,11 @@ public class SecurityDevConfiguration extends WebSecurityConfigurerAdapter {
             .withUser("qwebnm7788")
             .password("password")
             .roles("USER");
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }
