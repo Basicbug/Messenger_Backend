@@ -36,7 +36,8 @@ public class SecurityDevConfiguration extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
             .antMatchers("/stomp/**").hasRole("USER")
-            .antMatchers( "/*/signin", "/*/signup", "/social/**", "/v1/**", "/stomp/**").permitAll();
+//            .antMatchers( "/*/signin", "/*/signup", "/social/**", "/v1/**", "/stomp/**").permitAll()
+            .antMatchers("/v1/test/**").authenticated();
 //            .anyRequest()
 //            .hasRole("USER")
 //            .and()

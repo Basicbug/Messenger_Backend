@@ -21,6 +21,8 @@ public class UserDetailsServiceProvider implements AuthenticationProvider {
         // 전달받은 매개변수는 사용자가 입력한 로그인 정보를 담고 있음. 이를 DB 에 저장된 값과 비교하면 된다. (UserDetailsService 를 주로 이용)
         // TODO 인증과정 필요 + 사용자 정보 + 권한 을 조합하여 토큰생성
 
+        log.info("authentication process begin");
+
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(authentication.getName(), null,
             AuthorityUtils.createAuthorityList("USER"));
         return token;
