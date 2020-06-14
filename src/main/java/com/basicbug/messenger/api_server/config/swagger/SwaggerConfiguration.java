@@ -15,8 +15,6 @@ import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger.web.SecurityConfiguration;
-import springfox.documentation.swagger.web.SecurityConfigurationBuilder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
@@ -58,19 +56,6 @@ public class SwaggerConfiguration {
         return SecurityContext.builder()
             .securityReferences(basicAuth())
             .forPaths(PathSelectors.ant("/v1/**"))
-            .build();
-    }
-
-    @Bean
-    public SecurityConfiguration securityConfiguration() {
-        return SecurityConfigurationBuilder.builder()
-            .clientId("CLIENT_ID")
-            .clientSecret("CLIENT_SECRET")
-            .realm("TEST_REALM")
-            .appName("Basicbug")
-            .scopeSeparator(",")
-            .additionalQueryStringParams(null)
-            .useBasicAuthenticationWithAccessCodeGrant(false)
             .build();
     }
 
