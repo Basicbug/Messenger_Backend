@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class UserDetailsServiceProvider implements AuthenticationProvider {
+public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -22,6 +22,7 @@ public class UserDetailsServiceProvider implements AuthenticationProvider {
         // TODO 인증과정 필요 + 사용자 정보 + 권한 을 조합하여 토큰생성
 
         log.info("authentication process begin");
+        log.error("TEST");
 
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(authentication.getName(), null,
             AuthorityUtils.createAuthorityList("USER"));
@@ -30,6 +31,7 @@ public class UserDetailsServiceProvider implements AuthenticationProvider {
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return authentication.equals(UsernamePasswordAuthenticationToken.class);
+        return true;
+//        return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 }
