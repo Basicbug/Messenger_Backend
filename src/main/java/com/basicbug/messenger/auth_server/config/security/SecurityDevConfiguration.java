@@ -78,6 +78,4 @@ public class SecurityDevConfiguration {
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         }
     }
-
-
 }

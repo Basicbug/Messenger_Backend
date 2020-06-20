@@ -1,5 +1,6 @@
 package com.basicbug.messenger.auth_server.config.security;
 
+import com.basicbug.messenger.api_server.exception.UserNotFoundException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
@@ -66,7 +67,7 @@ public class JwtTokenProvider {
      * @param token
      * @return 인증 정보
      */
-    public Authentication getAuthentication(String token) {
+    public Authentication getAuthentication(String token) throws UserNotFoundException {
         UserDetails userDetails = userDetailsService.loadUserByUsername(getUserPk(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
