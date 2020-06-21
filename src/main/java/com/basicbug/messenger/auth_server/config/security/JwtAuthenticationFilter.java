@@ -1,5 +1,6 @@
 package com.basicbug.messenger.auth_server.config.security;
 
+import com.basicbug.messenger.api_server.util.JwtUtils;
 import java.io.IOException;
 import java.util.regex.Pattern;
 import javax.servlet.FilterChain;
@@ -9,8 +10,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -38,13 +37,12 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             HttpServletRequest req = (HttpServletRequest) request;
             HttpServletResponse resp = (HttpServletResponse) response;
 
-            String authorizationToken = extractAuthorizationToken(req);
+            String jwtToken = JwtUtils.extractJwtToken(req);
 
-            if (authorizationToken != null) {
-
+            if (jwtToken != null) {
                 try {
-                    String jwtToken = jwtTokenProvider.resolveToken(authorizationToken);
-                    Authentication authentication = jwtTokenProvider.getAuthentication(jwtToken);
+                    String token = jwtTokenProvider.resolveToken(jwtToken);
+                    Authentication authentication = jwtTokenProvider.getAuthentication(token);
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 } catch (Exception e) {
@@ -61,17 +59,4 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         chain.doFilter(request, response);
     }
 
-    private String extractAuthorizationToken(HttpServletRequest request) {
-        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (!token.isEmpty()) {
-            String[] parts = token.split(" ");
-            if (parts.length == 2) {
-                String scheme = parts[0];
-                String credentials = parts[1];
-
-                return BEARER.matcher(scheme).matches() ? credentials : null;
-            }
-        }
-        return null;
-    }
 }
