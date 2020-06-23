@@ -1,17 +1,18 @@
 package com.basicbug.messenger.chatting_server.config.handler;
 
-import com.basicbug.messenger.auth_server.config.security.JwtTokenProvider;
 import com.basicbug.messenger.api_server.model.user.User;
-import com.basicbug.messenger.api_server.repository.talk.TalkRoomRepository;
 import com.basicbug.messenger.api_server.repository.user.UserRepository;
 import com.basicbug.messenger.api_server.service.talk.TalkService;
+import com.basicbug.messenger.auth_server.config.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,15 +25,13 @@ import org.springframework.stereotype.Component;
 public class StompHandler implements ChannelInterceptor {
 
     private final TalkService talkService;
-    private final TalkRoomRepository talkRoomRepository;
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
-        log.info("Stomp preSend");
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
-
+        log.info(accessor.getShortLogMessage(null));
         if (StompCommand.CONNECT == accessor.getCommand()) {
             if (accessor.getFirstNativeHeader("Authorization") == null) {
                 log.info("Stomp connect request but not Authorization header");
@@ -47,26 +46,32 @@ public class StompHandler implements ChannelInterceptor {
                 return null;
             }
 
-            //TODO security context 에 user 를 추가..?
-            accessor.setUser(jwtTokenProvider.getAuthentication(token));
-            log.info("Stomp connect success " + accessor.getUser().getName());
+            try {
+                SecurityContextHolder.getContext().setAuthentication(jwtTokenProvider.getAuthentication(token));
+            } catch (Exception e) {
+                log.error("StompHandler token is invalid!");
+                //TODO 연결 실패 처리
+            }
+
         } else if (StompCommand.SUBSCRIBE == accessor.getCommand()) {
             String roomId = talkService.getRoomId(accessor.getDestination());
+            String token = jwtTokenProvider.resolveToken(accessor.getFirstNativeHeader(HttpHeaders.AUTHORIZATION));
 
-//            if (talkRoomRepositoryTemp.findTalkRoomById(roomId) == null) {
-//                log.error("stomp subscribe to room that does not exists " + roomId);
-//                return null;
-//            }
+            log.info("Stomp SUBSCRIBE to ", roomId, token);
 
-            //TODO 명시된 사용자의 구독 목록에 roomId 추가.
-            User user = userRepository.findByUid("qwebnm7788").orElse(null);
-
-            if (user == null) {
-                log.error("invalid user " + "uid here!!");
+            if (!jwtTokenProvider.validateToken(token)) {
+                log.info("Stomp subscribe request but invalid token");
                 return null;
             }
 
-//            user.participateToRoom(roomId);
+            User user = userRepository.findByUid(jwtTokenProvider.getUserPk(token)).orElse(null);
+
+            if (user == null) {
+                log.info("user is null");
+                return null;
+            }
+
+            talkService.participateToRoom(roomId, jwtTokenProvider.getUserPk(token));
 
         } else if (StompCommand.UNSUBSCRIBE == accessor.getCommand()) {
             String roomId = talkService.getRoomId(accessor.getDestination());

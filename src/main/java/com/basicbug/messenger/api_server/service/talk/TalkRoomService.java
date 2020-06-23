@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
  * @author JaewonChoi
  */
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TalkRoomService {

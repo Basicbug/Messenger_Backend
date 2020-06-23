@@ -49,7 +49,7 @@ public class TestController {
                 .uid(uid)
                 .provider("")
                 .name(name)
-                .roles(Collections.singletonList("ROLE_USER"))
+                .roles(Collections.singletonList("USER"))
                 .build());
 
             user = userRepository.findByUidAndProvider(uid, "").orElse(null);

@@ -110,4 +110,8 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
+
+    public void participateToRoom(TalkRoom talkRoom) {
+        participating_rooms.add(talkRoom);
+    }
 }

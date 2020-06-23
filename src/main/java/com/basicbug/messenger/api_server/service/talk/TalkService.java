@@ -83,4 +83,25 @@ public class TalkService {
         return new TalkRoomDetailResponseDto(talkRoom);
     }
 
+    public boolean participateToRoom(String roomId, String uid) {
+        TalkRoom talkRoom = talkRoomService.findTalkRoomById(roomId);
+
+        if (talkRoom == null) {
+            log.info("participateToRoom roomId is invalid", roomId);
+            return false;
+        }
+
+        User user = userService.findUserByUid(uid);
+
+        if (user == null) {
+            log.info("participateToRoom uid is invalid", uid);
+            return false;
+        }
+
+        //FIXME ManyToMany 에서 이렇게 양방향으로 데이터를 추가해 주어야 할까?
+        talkRoom.participate(user);
+        user.participateToRoom(talkRoom);
+
+        return true;
+    }
 }
