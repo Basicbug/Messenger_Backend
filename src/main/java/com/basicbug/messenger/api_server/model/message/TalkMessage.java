@@ -25,6 +25,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TalkMessage implements Serializable {
 
+    //TODO TalkMessage primary key 를 정해야 한다.
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

@@ -26,12 +26,12 @@ public class TalkRoomDetailResponseDto {
 
     private List<String> participants;
 
-    private TalkMessage lastMessage;
+    private long lastMessageId;
 
     public TalkRoomDetailResponseDto(TalkRoom talkRoom) {
         this.roomId = talkRoom.getRoomId();
         this.name = talkRoom.getName();
-        this.lastMessage = talkRoom.getLastMessage();
+        this.lastMessageId = talkRoom.getLastMessage().getId();
         this.participants = new ArrayList<>();
         for (User user : talkRoom.getParticipants()) {
             participants.add(user.getUid());
