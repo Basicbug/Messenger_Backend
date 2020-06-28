@@ -1,7 +1,7 @@
 package com.basicbug.messenger.chatting_server.controller.rabbitmq;
 
 import com.basicbug.messenger.chatting_server.config.rabbitmq.RabbitMQDevConfig;
-import com.basicbug.messenger.api_server.model.message.TalkMessage;
+import com.basicbug.messenger.chatting_server.dto.TalkMessageRequestDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class RabbitMQUtil {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public void sendMessage(TalkMessage message) {
+    public void sendMessage(TalkMessageRequestDto message) {
         log.info("sendMessage");
 
         if (message != null) {

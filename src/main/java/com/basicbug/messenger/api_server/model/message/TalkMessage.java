@@ -31,6 +31,9 @@ public class TalkMessage implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false, unique = true, name="mid")
+    private String mid;
+
     @Column(name = "room_id")
     private String roomId;
 

@@ -11,6 +11,6 @@ import org.springframework.data.repository.query.Param;
 public interface TalkMessageRepository extends JpaRepository<TalkMessage, Long> {
 
     //FIXME Native Query 로 수정 필요!
-    @Query(value = "select message from TalkMessage where message.id = :messageId and message.roomId = :roomId")
-    TalkMessage findTalkMessageByIdAndRoomId(@Param("messageId") String messageId, @Param("roomId") String roomId);
+    @Query(value = "select message from TalkMessage where message.mid = :mid and message.roomId = :roomId")
+    TalkMessage findTalkMessageByIdAndRoomId(@Param("mid") String mid, @Param("roomId") String roomId);
 }

@@ -2,12 +2,12 @@ package com.basicbug.messenger.api_server.controller.talk;
 
 import com.basicbug.messenger.api_server.dto.talk.response.TalkRoomBasicResponseDto;
 import com.basicbug.messenger.api_server.dto.talk.response.TalkRoomDetailResponseDto;
-import com.basicbug.messenger.api_server.model.message.TalkMessage;
 import com.basicbug.messenger.api_server.model.response.ListResponse;
 import com.basicbug.messenger.api_server.model.response.SingleResponse;
 import com.basicbug.messenger.api_server.service.ResponseService;
 import com.basicbug.messenger.api_server.service.talk.TalkMessageService;
 import com.basicbug.messenger.api_server.service.talk.TalkService;
+import com.basicbug.messenger.chatting_server.dto.TalkMessageResponseDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -62,10 +62,11 @@ public class TalkController {
 
     @ApiOperation(value = "단일 메세지 반환", notes = "Message id 를 이용하여 전체 메세지 정보 반환")
     @GetMapping("/message")
-    public SingleResponse<TalkMessage> getSingleMessage(
-        @ApiParam(value = "메세지 id", required = true) @RequestParam String messageId,
+    public SingleResponse<TalkMessageResponseDto> getSingleMessage(
+        @ApiParam(value = "메세지 id", required = true) @RequestParam String mid,
         @ApiParam(value = "채팅방 id", required = true) @RequestParam String roomId
     ) {
-        return responseService.getSingleResponse(talkMessageService.getTalkMessageById(messageId, roomId));
+        return responseService
+            .getSingleResponse(new TalkMessageResponseDto(talkMessageService.getTalkMessageById(mid, roomId)));
     }
 }

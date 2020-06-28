@@ -1,6 +1,5 @@
 package com.basicbug.messenger.api_server.dto.talk.response;
 
-import com.basicbug.messenger.api_server.model.message.TalkMessage;
 import com.basicbug.messenger.api_server.model.message.TalkRoom;
 import com.basicbug.messenger.api_server.model.user.User;
 import java.util.ArrayList;
