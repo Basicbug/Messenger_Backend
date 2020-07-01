@@ -64,6 +64,7 @@ public class User implements UserDetails {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "talkroom_id")
     )
+    @Builder.Default
     private List<TalkRoom> participating_rooms = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)

@@ -40,6 +40,7 @@ public class TalkRoom {
     private String name;
 
     @ManyToMany(mappedBy = "participating_rooms")
+    @Builder.Default
     private List<User> participants = new ArrayList<>();
 
     @OneToOne
