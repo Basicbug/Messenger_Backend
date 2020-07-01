@@ -36,4 +36,4 @@ JAR_NAME=$(ls $REPOSITORY/deploy/ | grep $PROJECT_NAME | tail -n 1)
 
 echo "Jar file $JAR_NAME"
 
-nohup java -jar $REPOSITORY/deploy/$JAR_NAME &
+nohup java -jar -Dspring.profiles.active=prod $REPOSITORY/deploy/$JAR_NAME &
