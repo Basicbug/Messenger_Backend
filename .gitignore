@@ -8,6 +8,9 @@ build/
 ### application properties ###
 application-dev.yml
 
+### docker-compose secrets ###
+config/dev/**
+
 ### STS ###
 .apt_generated
 .classpath

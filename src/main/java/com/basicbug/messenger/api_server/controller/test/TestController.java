@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,6 +57,21 @@ public class TestController {
         }
 
         return responseService
-            .getSingleResponse(new JwtTokenResponse(jwtTokenProvider.createToken(String.valueOf(user.getUid()), user.getRoles())));
+            .getSingleResponse(
+                new JwtTokenResponse(jwtTokenProvider.createToken(String.valueOf(user.getUid()), user.getRoles())));
+    }
+
+    @ApiOperation(value = "사용자 jwt 토큰 반환", notes = "사용자에게 발급된 jwt token 반환")
+    @GetMapping("/token")
+    public SingleResponse<JwtTokenResponse> getJwtTokenForTestUser(
+        @ApiParam(value = "사용자 uid", required = true) @RequestParam String uid) {
+
+        User user = userRepository.findByUid(uid).orElse(null);
+        if (user == null) {
+            log.info("user is not exists", uid);
+            return null;
+        }
+
+        return responseService.getSingleResponse(new JwtTokenResponse(jwtTokenProvider.createToken(String.valueOf(user.getUid()), user.getRoles())));
     }
 }
