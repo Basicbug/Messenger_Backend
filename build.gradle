@@ -60,7 +60,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     testImplementation 'org.springframework.amqp:spring-rabbit-test'
 
-    compile('com.h2database:h2')
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
