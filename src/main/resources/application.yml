@@ -2,10 +2,10 @@ server:
     port: 8080
 
 spring:
-    datasource:
-        driver-class-name: org.h2.Driver
-        username: sa
     jpa:
-        database-platform: org.hibernate.dialect.H2Dialect
-        properties.hibernate.hbm2ddl.auto: update
+        database: mysql
+        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+        hibernate:
+            ddl-auto: create
         show-sql: true
+        generate-ddl: true
