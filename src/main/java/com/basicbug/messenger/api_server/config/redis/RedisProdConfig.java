@@ -1,8 +1,7 @@
 package com.basicbug.messenger.api_server.config.redis;
 
-import io.lettuce.core.RedisURI;
-import java.net.URI;
 import java.net.URISyntaxException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -22,6 +21,12 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisProdConfig {
 
+    @Value("${spring.redis.host}")
+    private String redisHost;
+
+    @Value("${spring.redis.port}")
+    private int redisPort;
+
     @Bean
     public ChannelTopic channelTopic() {
         return new ChannelTopic("talkroom");
@@ -29,11 +34,7 @@ public class RedisProdConfig {
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() throws URISyntaxException {
-        RedisURI redisURI = RedisURI.create(new URI(System.getenv("REDIS_HOST") + ":" + System.getenv("REDIS_PORT")));
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName(redisURI.getHost());
-        redisStandaloneConfiguration.setPort(redisURI.getPort());
-        redisStandaloneConfiguration.setPassword(redisURI.getPassword());
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(redisHost, redisPort);
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
 
