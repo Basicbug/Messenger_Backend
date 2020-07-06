@@ -22,20 +22,20 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisProdConfig {
 
-    @Bean
-    public ChannelTopic channelTopic() {
-        return new ChannelTopic("talkroom");
-    }
+//    @Bean
+//    public ChannelTopic channelTopic() {
+//        return new ChannelTopic("talkroom");
+//    }
 
-    @Bean
-    public RedisConnectionFactory redisConnectionFactory() throws URISyntaxException {
-        RedisURI redisURI = RedisURI.create(new URI(System.getenv("REDIS_URL")));
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName(redisURI.getHost());
-        redisStandaloneConfiguration.setPort(redisURI.getPort());
-        redisStandaloneConfiguration.setPassword(redisURI.getPassword());
-        return new LettuceConnectionFactory(redisStandaloneConfiguration);
-    }
+//    @Bean
+//    public RedisConnectionFactory redisConnectionFactory() throws URISyntaxException {
+//        RedisURI redisURI = RedisURI.create(new URI(System.getenv("REDIS_URL")));
+//        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+//        redisStandaloneConfiguration.setHostName(redisURI.getHost());
+//        redisStandaloneConfiguration.setPort(redisURI.getPort());
+//        redisStandaloneConfiguration.setPassword(redisURI.getPassword());
+//        return new LettuceConnectionFactory(redisStandaloneConfiguration);
+//    }
 
     @Bean
     public RedisMessageListenerContainer redisMessageListener(RedisConnectionFactory connectionFactory, ChannelTopic channelTopic) {
