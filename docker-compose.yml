@@ -10,6 +10,7 @@ services:
         image: mysql:5.7
         volumes:
             - db_data:/var/lib/mysql
+            - ./utf8.cnf:/etc/mysql/conf.d/custom.cnf
         environment:
             MYSQL_DATABASE: basicbug_db
             MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_secret
