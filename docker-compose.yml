@@ -8,9 +8,11 @@ services:
             - "15672:15672"
     mysql:
         image: mysql:5.7
+        restart: always
         volumes:
             - db_data:/var/lib/mysql
-            - ./utf8.cnf:/etc/mysql/conf.d/custom.cnf
+            - ./utf8.cnf:/etc/mysql/my.cnf
+            - ./utf8.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
         environment:
             MYSQL_DATABASE: basicbug_db
             MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_secret

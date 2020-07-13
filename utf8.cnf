@@ -1,8 +1,13 @@
 [client]
-default-character-set = utf8mb4
-
-[mysqldump]
-default-character-set = utf8mb4
+default-character-set=utf8mb4
 
 [mysql]
-default-character-set = utf8mb4
+default-character-set=utf8mb4
+
+[mysqld]
+character_set_server=utf8mb4
+collation-server=utf8mb4_general_ci
+init-connect="set collation_connection=utf8mb4_general_ci"
+init_connect="set names utf8mb4"
+character-set-server=utf8mb4
+skip-character-set-client-handshake
