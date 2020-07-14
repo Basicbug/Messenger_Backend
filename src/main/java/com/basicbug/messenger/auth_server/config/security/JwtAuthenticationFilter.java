@@ -32,6 +32,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
         throws IOException, ServletException {
 
+        log.info("JwtAuthenticationFilter", ((HttpServletRequest) request).getRequestURL());
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
 
             HttpServletRequest req = (HttpServletRequest) request;
