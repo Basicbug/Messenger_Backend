@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 public class ResponseService {
 
     public enum CommonResult {
-        SUCCESS(0, "성공"),
-        FAIL(-1, "실패");
+        SUCCESS(200, "성공"),
+        FAIL(500, "실패");
 
         int code;
         String message;

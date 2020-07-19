@@ -1,5 +1,6 @@
 package com.basicbug.messenger.api_server.controller.friends;
 
+import com.basicbug.messenger.api_server.dto.friends.FriendsResponseDto;
 import com.basicbug.messenger.api_server.model.friends.Friends;
 import com.basicbug.messenger.api_server.model.response.CommonResponse;
 import com.basicbug.messenger.api_server.model.response.ListResponse;
@@ -38,7 +39,7 @@ public class FriendsController {
 
     @ApiOperation(value = "친구 목록", notes = "사용자의 친구 리스트를 반환")
     @GetMapping("/{uid}")
-    public ListResponse<Friends> findAllFriends(
+    public ListResponse<FriendsResponseDto> findAllFriends(
         @ApiParam(value = "사용자 uid", required = true) @PathVariable String uid) {
 
         return responseService.getListResponse(friendsService.getAllFriends(uid));
