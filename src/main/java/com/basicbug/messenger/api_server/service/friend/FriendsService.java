@@ -39,7 +39,7 @@ public class FriendsService {
         Optional<List<Friends>> friendsList = friendsRepository.findAllByUid(uid);
 
         if (friendsList.isPresent()) {
-            List<String> uids = friendsList.get().stream().map(Friends::getUid).collect(Collectors.toList());
+            List<String> uids = friendsList.get().stream().map(Friends::getFrienduid).collect(Collectors.toList());
             List<FriendsResponseDto> friendsResponseDtos = new ArrayList<>();
             for (User user : userService.findUsersByUid(uids)) {
                 friendsResponseDtos.add(new FriendsResponseDto(user.getUid(), user.getName(), user.getStatus()));
