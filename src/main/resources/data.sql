@@ -2,6 +2,17 @@ INSERT INTO user (uid, name, provider, status) VALUES ('qwebnm7788', 'cjw', 'nav
 INSERT INTO user (uid, name, provider, status) VALUES ('bsgreentea', 'kbs', 'naver', 'naver2');
 INSERT INTO user (uid, name, provider) VALUES ('ChoMk', 'cmk', 'naver');
 
+INSERT INTO user (uid, name, provider, status) VALUES ('Brent','Emma Fischer','naver','a'),('Devin','Kylan Hogan','naver','habitant'),('Dale','Noelle Hines','naver','lacus');
+INSERT INTO user (uid, name, provider, status) VALUES ('Kirk','Frances Ingram','naver','auctor'),('Bradley','Yoko Craig','naver','molestie'),('Kuame','Carla England','naver','ornare');
+INSERT INTO user (uid, name, provider, status) VALUES ('Brendan','Celeste Fox','naver','risus'),('Amir','Beverly Banks','naver','lobortis'),('Kenyon','Lunea Terrell','naver','lacus');
+INSERT INTO user (uid, name, provider, status) VALUES ('Zahir','Lee Taylor','naver','in'),('Hasad','Maile Rivers','naver','dictum'),('Eagan','Macy Holland','naver','enim');
+INSERT INTO user (uid, name, provider, status) VALUES ('Kennan','Mechelle Ross','naver','Suspendisse'),('Connor','Jada Trevino','naver','Nullam'),('Chase','Rhoda Vance','naver','sagittis');
+INSERT INTO user (uid, name, provider, status) VALUES ('Donovan','Claudia Tanner','naver','sit'),('Allistair','Uta Nolan','naver','volutpat'),('Mohammad','Orla Roth','naver','pharetra');
+INSERT INTO user (uid, name, provider, status) VALUES ('Macon','Ainsley Cobb','naver','parturient'),('Elton','Regan Olsen','naver','rhoncus'),('Baker','Wynne Wong','naver','Vivamus');
+INSERT INTO user (uid, name, provider, status) VALUES ('Lewis','Aimee Cole','naver','Phasellus'),('Brian','Eve Tucker','naver','felis'),('Dillon','Megan Hensley','naver','ut');
+INSERT INTO user (uid, name, provider, status) VALUES ('Jeremy','Jocelyn Wilkinson','naver','Nullam'),('Keaton','Calista Gill','naver','aliquet'),('Duncan','Autumn Pope','naver','scelerisque');
+INSERT INTO user (uid, name, provider, status) VALUES ('Hakeem','Britanney Carney','naver','Aliquam'),('Kamal','Uta Spence','naver','scelerisque'),('Giacomo','Alma Johnston','naver','orci');
+
 INSERT INTO friends (uid, frienduid) VALUES ('ChoMk', 'qwebnm7788');
 INSERT INTO friends (uid, frienduid) VALUES ('ChoMk', 'bsgreentea');
 INSERT INTO friends (uid, frienduid) VALUES ('bsgreentea', 'ChoMk');
