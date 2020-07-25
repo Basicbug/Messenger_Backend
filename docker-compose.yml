@@ -23,8 +23,10 @@ services:
 
     redis:
         image: redis:6.0.5-alpine
+        network_mode: host
         ports:
             - "6379:6379"
+        command: redis-server /data/redis.conf
 
 secrets:
     mysql_secret:
