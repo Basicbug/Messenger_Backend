@@ -47,7 +47,7 @@ public class FriendsService {
 
             return friendsResponseDtos;
         } else {
-            logger.error("getAllFriends return null uid=", uid);
+            logger.error("getAllFriends return null uid=" + uid);
             return null;
         }
     }
