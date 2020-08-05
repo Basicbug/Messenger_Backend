@@ -24,13 +24,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class FriendsService {
 
-    private Logger logger = LoggerFactory.getLogger(FriendsService.class);
+    private final Logger logger = LoggerFactory.getLogger(FriendsService.class);
 
     private final FriendsRepository friendsRepository;
     private final UserService userService;
 
     /**
-     * getAllFriends uid 의 전체 친구 리스트를 반환한다.
+     * getAllFriends uid 를 가진 사용자의 전체 친구 리스트를 반환한다.
      *
      * @param uid 사용자의 uid
      * @return uid 의 전체 친구 리스트
@@ -39,12 +39,13 @@ public class FriendsService {
         Optional<List<Friends>> friendsList = friendsRepository.findAllByUid(uid);
 
         if (friendsList.isPresent()) {
-            List<String> uids = friendsList.get().stream().map(Friends::getFrienduid).collect(Collectors.toList());
-            List<FriendsResponseDto> friendsResponseDtos = new ArrayList<>();
-            for (User user : userService.findUsersByUid(uids)) {
-                friendsResponseDtos.add(new FriendsResponseDto(user.getUid(), user.getName(), user.getStatus()));
-            }
+            List<String> friendUidList = friendsList.get().stream().map(Friends::getFrienduid)
+                .collect(Collectors.toList());
 
+            List<FriendsResponseDto> friendsResponseDtos = new ArrayList<>();
+            for (User user : userService.findUsersByUid(friendUidList)) {
+                friendsResponseDtos.add(new FriendsResponseDto(user));
+            }
             return friendsResponseDtos;
         } else {
             logger.error("getAllFriends return null uid=" + uid);
@@ -56,16 +57,18 @@ public class FriendsService {
      * addFriends uid 의 친구 리스트에 friendUid 를 추가한다.
      */
     public void addFriends(String uid, String friendUid) {
-        friendsRepository.save(Friends.builder()
-            .uid(uid)
-            .frienduid(friendUid)
-            .build());
+        friendsRepository.save(
+            Friends.builder()
+                .uid(uid)
+                .frienduid(friendUid)
+                .build()
+        );
     }
 
     /**
      * isFriends 두 uid 가 서로 친구 관계인지 여부를 반환한다.
      *
-     * @param uid 사용자의 uid
+     * @param uid       사용자의 uid
      * @param friendUid 친구의 uid
      * @return 두 uid 가 친구 관계이면 true, 아니면 false
      */

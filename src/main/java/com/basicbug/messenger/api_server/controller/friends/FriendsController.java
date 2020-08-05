@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/friends")
 public class FriendsController {
 
-    private Logger logger = LoggerFactory.getLogger(FriendsController.class);
+    private final Logger logger = LoggerFactory.getLogger(FriendsController.class);
 
     private final FriendsService friendsService;
     private final ResponseService responseService;

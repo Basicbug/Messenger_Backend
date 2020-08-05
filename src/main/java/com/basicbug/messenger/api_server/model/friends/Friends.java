@@ -29,10 +29,6 @@ public class Friends {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    /*
-    FIXME
-    This field needs to be hide?
-     */
     @Column(nullable = false, length = 30)
     private String uid;
 

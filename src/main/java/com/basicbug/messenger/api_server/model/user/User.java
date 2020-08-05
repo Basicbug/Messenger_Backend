@@ -48,6 +48,9 @@ public class User implements UserDetails {
     @Column(nullable = false, length = 100)
     private String name;
 
+    @Column(nullable = true, length = 50)
+    private String email;
+
     @JsonProperty(access = Access.WRITE_ONLY)
     @Column(nullable = true, length = 100)
     private String password;
